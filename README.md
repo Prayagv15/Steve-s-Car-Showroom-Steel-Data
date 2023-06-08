@@ -287,10 +287,10 @@
 | Tom Lee | Seattle | 2           |
 
 ---
-**Query #11: What is the name and age of the salesperson who generated the highest revenue in the year 2022?**
+**Query #11: What is the name,city and age of the salesperson who generated the highest revenue in the year 2022?**
 
     SELECT 
-        sp.name AS Name, sp.city AS City, SUM(c.cost_$) AS 'Revenue'
+        sp.name AS Name, sp.city AS City,sp.age,SUM(c.cost_$) AS 'Revenue'
     FROM
         cars AS c
             INNER JOIN
@@ -299,13 +299,14 @@
         salespersons AS sp ON s.salesman_id = sp.salesman_id
     WHERE
         YEAR(purchase_date) = 2022
-    GROUP BY sp.name , sp.city
+    GROUP BY sp.name , sp.city,sp.age
     ORDER BY Revenue DESC
     LIMIT 1;
 
-| Name       | City     | Revenue |
-| ---------- | -------- | ------- |
-| Emily Wong | San Fran | 116000  |
+| Name       | City     | age | Revenue |
+| ---------- | -------- | --- | ------- |
+| Emily Wong | San Fran | 35  | 116000  |
+
 
 ---
 **Query #12: Query for the sales made by each Sales-person in the Year 2022.**
