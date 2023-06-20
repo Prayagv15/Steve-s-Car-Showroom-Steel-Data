@@ -310,29 +310,30 @@
 
 ---
 **Query #12: Query for the sales made by each Sales-person in the Year 2022.**
+WITH cte AS 
+    (
+        SELECT 
+            sp.name, s.purchase_date, c.cost_$ AS cost
+        FROM
+            salespersons AS sp
+        INNER JOIN
+            sales AS s ON s.salesman_id = sp.salesman_id
+        INNER JOIN
+            cars AS c ON c.car_id = s.car_id
+      where Year(purchase_date)=2022
+    )
+    SELECT distinct(name),sum(cost) over (partition by name) as `Revenue in the Year: 2022` FROM cte;
 
-    SELECT 
-        sp.name, s.purchase_date, c.cost_$ AS Cost
-    FROM
-        salespersons AS sp
-            INNER JOIN
-        sales AS s ON s.salesman_id = sp.salesman_id
-            INNER JOIN
-        cars AS c ON c.car_id = s.car_id
-    WHERE
-        YEAR(purchase_date) = 2022
-    ORDER BY sp.name ASC;
+| name       | Revenue in the Year: 2022 |
+| ---------- | ------------------------- |
+| Emily Wong | 116000                    |
+| John Smith | 40000                     |
+| Lucy Chen  | 80000                     |
+| Tom Lee    | 85000                     |
 
-| name       | purchase_date | Cost  |
-| ---------- | ------------- | ----- |
-| Emily Wong | 2022-02-10    | 26000 |
-| Emily Wong | 2022-03-01    | 60000 |
-| Emily Wong | 2022-07-09    | 30000 |
-| John Smith | 2022-05-05    | 40000 |
-| Lucy Chen  | 2022-01-01    | 25000 |
-| Lucy Chen  | 2022-06-07    | 55000 |
-| Tom Lee    | 2022-02-03    | 30000 |
-| Tom Lee    | 2022-04-02    | 55000 |
+---
+
+[View on DB Fiddle](https://www.db-fiddle.com/f/coy9uYB62o8evTt4fH3xeG/1)
 
 ---
 
