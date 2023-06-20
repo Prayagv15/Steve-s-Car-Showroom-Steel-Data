@@ -310,7 +310,8 @@
 
 ---
 **Query #12: Query for the sales made by each Sales-person in the Year 2022.**
-WITH cte AS 
+    
+    WITH cte AS 
     (
         SELECT 
             sp.name, s.purchase_date, c.cost_$ AS cost
